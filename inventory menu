@@ -1,0 +1,52 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+
+    //INVENTORY
+	string productNames[100];    //array for 100 names to store
+	double productPrices[100];     //decimal storage for pricing
+	int productQuantities[100];      //integer storage for product stock
+    string productStores[100];     //store locations for items
+
+    //EMPLOYEE MANAGEMENT
+    string employeeNames[100];    //employee names
+    string employeeStores[100];     //store locations
+    
+
+    //starting count for Inventory and Employee
+    int productCount = 0;
+    int employeeCount = 0;
+
+    //menu selection storage
+    int option;
+
+	while (true) {
+		cout << "\n-----Aotearoa Treasures Management System-----" << endl;
+		cout << "1 - Add Product" << endl;
+		cout << "2 - Add Employee" << endl;
+		cout << "3 - 3 - Exit" << endl;
+        cout << "Enter option" << endl;
+		cin >> option;
+		cin.ignore();
+
+
+		//add product
+		if (option == 1) {
+            cout << "ProductName, ProductPrice, ProductQuantity, ProductStore" << endl;
+        }        
+		//add employee
+		else if (option == 2) {
+            cout << "EmployeeName, EmployeeStore" << endl;
+        }
+		//exit
+		else if (option == 3) {
+			break;
+		}
+		else {
+			cout << "Invalid choice" << endl;
+		}
+	}
+	system("pause>0");
+}
