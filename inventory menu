@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
+#include <iomanip>
 using namespace std;
+
 
 int main() {
 
@@ -9,6 +11,9 @@ int main() {
 	double productPrices[100];     //decimal storage for pricing
 	int productQuantities[100];      //integer storage for product stock
     string productStores[100];     //store locations for items
+    int wellingtonStock[100];
+    int christchurchStock[100];
+    int aucklandStock[100];
 
     //EMPLOYEE MANAGEMENT
     string employeeNames[100];    //employee names
@@ -26,7 +31,7 @@ int main() {
 		cout << "\n-----Aotearoa Treasures Management System-----" << endl;
 		cout << "1 - Add Product" << endl;
 		cout << "2 - Add Employee" << endl;
-		cout << "3 - 3 - Exit" << endl;
+		cout << "3 - Exit" << endl;
         cout << "Enter option" << endl;
 		cin >> option;
 		cin.ignore();
@@ -34,8 +39,153 @@ int main() {
 
 		//add product
 		if (option == 1) {
-            cout << "ProductName, ProductPrice, ProductQuantity, ProductStore" << endl;
-        }        
+            int productOptions;
+            while (true) {
+        cout << "\n----- Product Management Menu -----" << endl;
+        cout << "1 - View Products" << endl;
+        cout << "2 - Add Product" << endl;
+        cout << "3 - Update Product" << endl;
+        cout << "4 - Delete Product" << endl;
+        cout << "5 - Low Stock Alert" << endl;
+        cout << "6 - Back to Main Menu" << endl;
+        cout << "Enter option: ";
+        cin >> productOption;
+        cin.ignore();
+
+        if (productOption == 1) {
+            if (productCount == 0) {
+                cout << "No products available." << endl;
+            }
+            else {
+                cout << left << setw(5) << "No."
+                     << setw(20) << "Product"
+                     << setw(10) << "Price"
+                     << setw(15) << "Wellington"
+                     << setw(18) << "Christchurch"
+                     << setw(15) << "Auckland" << endl;
+
+                for (int i = 0; i < productCount; i++) {
+                    cout << left << setw(5) << i + 1
+                         << setw(20) << productNames[i]
+                         << "$" << setw(9) << productPrices[i]
+                         << setw(15) << wellingtonStock[i]
+                         << setw(18) << christchurchStock[i]
+                         << setw(15) << aucklandStock[i] << endl;
+                }
+            }
+        }
+        else if (productOption == 2) {
+            cout << "Enter product name: ";
+            getline(cin, productNames[productCount]);
+
+            cout << "Enter product price: $";
+            cin >> productPrices[productCount];
+
+            cout << "Enter Wellington stock: ";
+            cin >> wellingtonStock[productCount];
+
+            cout << "Enter Christchurch stock: ";
+            cin >> christchurchStock[productCount];
+
+            cout << "Enter Auckland stock: ";
+            cin >> aucklandStock[productCount];
+
+            productCount++;
+
+            cout << "Product added successfully." << endl;
+        }
+        else if (productOption == 3) {
+            int productNumber;
+
+            cout << "Enter product number to update: ";
+            cin >> productNumber;
+            cin.ignore();
+
+            if (productNumber < 1 || productNumber > productCount) {
+                cout << "Invalid product number." << endl;
+            }
+            else {
+                int index = productNumber - 1;
+
+                cout << "Enter new product name: ";
+                getline(cin, productNames[index]);
+
+                cout << "Enter new product price: $";
+                cin >> productPrices[index];
+
+                cout << "Enter new Wellington stock: ";
+                cin >> wellingtonStock[index];
+
+                cout << "Enter new Christchurch stock: ";
+                cin >> christchurchStock[index];
+
+                cout << "Enter new Auckland stock: ";
+                cin >> aucklandStock[index];
+
+                cout << "Product updated successfully." << endl;
+            }
+        }
+        else if (productOption == 4) {
+            int productNumber;
+
+            cout << "Enter product number to delete: ";
+            cin >> productNumber;
+
+            if (productNumber < 1 || productNumber > productCount) {
+                cout << "Invalid product number." << endl;
+            }
+            else {
+                int index = productNumber - 1;
+
+                for (int i = index; i < productCount - 1; i++) {
+                    productNames[i] = productNames[i + 1];
+                    productPrices[i] = productPrices[i + 1];
+                    wellingtonStock[i] = wellingtonStock[i + 1];
+                    christchurchStock[i] = christchurchStock[i + 1];
+                    aucklandStock[i] = aucklandStock[i + 1];
+                }
+
+                productCount--;
+
+                cout << "Product deleted successfully." << endl;
+            }
+        }
+        else if (productOption == 5) {
+            bool lowStockFound = false;
+
+            for (int i = 0; i < productCount; i++) {
+                if (wellingtonStock[i] < 5 || christchurchStock[i] < 5 || aucklandStock[i] < 5) {
+                    lowStockFound = true;
+
+                    cout << "\nLow stock product: " << productNames[i] << endl;
+
+                    if (wellingtonStock[i] < 5) {
+                        cout << "Wellington stock: " << wellingtonStock[i] << endl;
+                    }
+
+                    if (christchurchStock[i] < 5) {
+                        cout << "Christchurch stock: " << christchurchStock[i] << endl;
+                    }
+
+                    if (aucklandStock[i] < 5) {
+                        cout << "Auckland stock: " << aucklandStock[i] << endl;
+                    }
+                }
+            }
+
+            if (!lowStockFound) {
+                cout << "No low stock products found." << endl;
+            }
+        }
+        else if (productOption == 6) {
+            break;
+        }
+        else {
+            cout << "Invalid choice." << endl;
+        }
+    }
+}
+       
 		//add employee
 		else if (option == 2) {
             cout << "EmployeeName, EmployeeStore" << endl;
