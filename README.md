@@ -16,6 +16,7 @@ future features
    - View products (shown across all three stores)
    - update product info
    - delete product
+   - Add product
 
  - Low stock alert (below 5 stock)
 
@@ -28,6 +29,7 @@ future features
    - View employee
    - update employee info
    - delete employee
+   - add employee
 
  - Weekley roster
    - view roster
