@@ -189,15 +189,109 @@ int main() {
        
 		//add employee
 		else if (option == 2) {
-            cout << "EmployeeName, EmployeeStore" << endl;
+            int employeeOptions;
+            while (true) {
+                cout << "\n----- Administrator Menu -----" << endl;
+                cout << "1 - View Employee Roster" << endl;
+                cout << "2 - Edit Employee Roster" << endl;
+                cout << "3 - Add New Employee" << endl;
+                cout << "4 - Delete Employee" << endl;
+                cout << "5 - Back to Main Menu" << endl;
+                cout << "Enter option: ";
+                cin >> employeeOptions;
+                cin.ignore();
+
+                if (employeeOptions == 1) {
+                    if (employeeCount == 0) {
+                        cout << "No roster is currently set." << endl;
+                    }
+                    else {
+                        cout << left << setw(5) << "No."
+                             << setw(25) << "Employee Name"
+                             << setw(20) << "Store Location" << endl;
+                        for (int i = 0; i < employeeCount; i++) {
+                            cout << left << setw(5) << i + 1
+                                 << setw(25) << employeeNames[i]
+                                 << setw(20) << employeeStores[i] << endl;
+                        }
+                    }
+                }
+       
+                else if (employeeOptions == 2) {
+                    if (employeeCount == 0) {
+                        cout << "No employees to edit." << endl;
+                    } else {
+                        int employeeNumber;
+                        cout << "Enter employee number to edit: ";
+                        cin >> employeeNumber;
+                        cin.ignore();
+
+                        if (employeeNumber < 1 || employeeNumber > employeeCount) {
+                            cout << "Invalid employee number." << endl;
+                        } else {
+                            int idx = employeeNumber - 1;
+                            cout << "Current name: " << employeeNames[idx] << endl;
+                            cout << "Enter new name (leave blank to keep): ";
+                            string newName;
+                            getline(cin, newName);
+                            if (!newName.empty()) employeeNames[idx] = newName;
+
+                            cout << "Current store: " << employeeStores[idx] << endl;
+                            cout << "Enter new store location (leave blank to keep): ";
+                            string newStore;
+                            getline(cin, newStore);
+                            if (!newStore.empty()) employeeStores[idx] = newStore;
+
+                            cout << "Employee updated successfully." << endl;
+                        }
+                    }
+                }
+                else if (employeeOptions == 3) {
+                    cout << "Enter employee name: ";
+                    getline(cin, employeeNames[employeeCount]);
+                    cout << "Enter store location: ";
+                    getline(cin, employeeStores[employeeCount]);
+                    employeeCount++;
+                    cout << "Employee added successfully." << endl;
+                }
+                else if (employeeOptions == 4) {
+                    if (employeeCount == 0) {
+                        cout << "No employees to delete." << endl;
+                    } else {
+                        int employeeNumber;
+                        cout << "Enter employee number to delete: ";
+                        cin >> employeeNumber;
+                        cin.ignore();
+
+                        if (employeeNumber < 1 || employeeNumber > employeeCount) {
+                            cout << "Invalid employee number." << endl;
+                        } else {
+                            int idx = employeeNumber - 1;
+                            for (int i = idx; i < employeeCount - 1; i++) {
+                                employeeNames[i] = employeeNames[i + 1];
+                                employeeStores[i] = employeeStores[i + 1];
+                            }
+                            employeeCount--;
+                            cout << "Employee deleted successfully." << endl;
+                        }
+                    }
+                }
+                else if (employeeOptions == 5) {
+                    break;
+                }
+                else {
+                    cout << "Invalid choice." << endl;
+                }
+            }
         }
-		//exit
-		else if (option == 3) {
-			break;
-		}
-		else {
-			cout << "Invalid choice" << endl;
-		}
-	}
-	system("pause>0");
+
+        //exit
+        else if (option == 3) {
+            break;
+        }
+        else {
+            cout << "Invalid choice" << endl;
+        }
+    }
+    system("pause>0");
 }
