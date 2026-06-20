@@ -1,16 +1,8 @@
-#include <iostream>
-#include <string>
-#include <iomanip>
-using namespace std;
-
-
 int main() {
 
-    //INVENTORY
-	string productNames[100];    //array for 100 names to store
-	double productPrices[100];     //decimal storage for pricing
-	int productQuantities[100];      //integer storage for product stock
-    string productStores[100];     //store locations for items
+    //INVENTORY MANAGEMENT data storage
+	string productNames[100];
+	double productPrices[100];
     int wellingtonStock[100];
     int christchurchStock[100];
     int aucklandStock[100];
@@ -27,19 +19,20 @@ int main() {
     //menu selection storage
     int option;
 
+	//MAIN MENU
 	while (true) {
-		cout << "\n-----Aotearoa Treasures Management System-----" << endl;
-		cout << "1 - Add Product" << endl;
-		cout << "2 - Add Employee" << endl;
+		cout << "\n----- Aotearoa Treasures Management System -----" << endl;
+		cout << "1 - Product Management" << endl;
+		cout << "2 - Employee Management" << endl;
 		cout << "3 - Exit" << endl;
         cout << "Enter option" << endl;
 		cin >> option;
 		cin.ignore();
 
 
-		//add product
+		//PRODUCT MANAGEMENT
 		if (option == 1) {
-            int productOptions;
+			int productOption;
             while (true) {
         cout << "\n----- Product Management Menu -----" << endl;
         cout << "1 - View Products" << endl;
@@ -52,11 +45,12 @@ int main() {
         cin >> productOption;
         cin.ignore();
 
+		//VIEW PRODUCTS
         if (productOption == 1) {
             if (productCount == 0) {
-                cout << "No products available." << endl;
+                cout << "No products available." << endl;//when no products in stock => no products available
             }
-            else {
+            else {                                       //display table for all products
                 cout << left << setw(5) << "No."
                      << setw(20) << "Product"
                      << setw(10) << "Price"
@@ -64,7 +58,7 @@ int main() {
                      << setw(18) << "Christchurch"
                      << setw(15) << "Auckland" << endl;
 
-                for (int i = 0; i < productCount; i++) {
+                for (int i = 0; i < productCount; i++) {   //loop for picking out products
                     cout << left << setw(5) << i + 1
                          << setw(20) << productNames[i]
                          << "$" << setw(9) << productPrices[i]
@@ -74,9 +68,11 @@ int main() {
                 }
             }
         }
+
+		//ADD PRODUCT
         else if (productOption == 2) {
             cout << "Enter product name: ";
-            getline(cin, productNames[productCount]);
+            getline(cin, productNames[productCount]); //takes written line and stores in productNames[productCount]
 
             cout << "Enter product price: $";
             cin >> productPrices[productCount];
@@ -90,10 +86,12 @@ int main() {
             cout << "Enter Auckland stock: ";
             cin >> aucklandStock[productCount];
 
-            productCount++;
+            productCount++; //increase product count
 
             cout << "Product added successfully." << endl;
         }
+
+		//UPDATE PRODUCT
         else if (productOption == 3) {
             int productNumber;
 
@@ -101,11 +99,11 @@ int main() {
             cin >> productNumber;
             cin.ignore();
 
-            if (productNumber < 1 || productNumber > productCount) {
+            if (productNumber < 1 || productNumber > productCount) {//invalid number check and notification
                 cout << "Invalid product number." << endl;
             }
             else {
-                int index = productNumber - 1;
+                int index = productNumber - 1; //array index for product data to give productNumber
 
                 cout << "Enter new product name: ";
                 getline(cin, productNames[index]);
@@ -125,6 +123,8 @@ int main() {
                 cout << "Product updated successfully." << endl;
             }
         }
+
+		//DELETE PRODUCT
         else if (productOption == 4) {
             int productNumber;
 
@@ -135,9 +135,9 @@ int main() {
                 cout << "Invalid product number." << endl;
             }
             else {
-                int index = productNumber - 1;
+                int index = productNumber - 1;  //array index for product data to give productNumber
 
-                for (int i = index; i < productCount - 1; i++) {
+                for (int i = index; i < productCount - 1; i++) {  //removes product from ALL stores
                     productNames[i] = productNames[i + 1];
                     productPrices[i] = productPrices[i + 1];
                     wellingtonStock[i] = wellingtonStock[i + 1];
@@ -145,15 +145,16 @@ int main() {
                     aucklandStock[i] = aucklandStock[i + 1];
                 }
 
-                productCount--;
+                productCount--; //reduce product count
 
                 cout << "Product deleted successfully." << endl;
             }
         }
+		//LOW STOCK ALERT FEATURE
         else if (productOption == 5) {
-            bool lowStockFound = false;
+            bool lowStockFound = false; // false = no low stock found, true = at least one low stock product found
 
-            for (int i = 0; i < productCount; i++) {
+            for (int i = 0; i < productCount; i++) { //loop for checking products
                 if (wellingtonStock[i] < 5 || christchurchStock[i] < 5 || aucklandStock[i] < 5) {
                     lowStockFound = true;
 
@@ -173,7 +174,7 @@ int main() {
                 }
             }
 
-            if (!lowStockFound) {
+            if (!lowStockFound) { //no low stock notification
                 cout << "No low stock products found." << endl;
             }
         }
