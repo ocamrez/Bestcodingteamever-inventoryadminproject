@@ -1,3 +1,9 @@
+#include <iostream>
+#include <string>
+#include <iomanip> //For UI alignment of tables
+using namespace std;
+
+
 int main() {
 
     //INVENTORY MANAGEMENT data storage
@@ -187,11 +193,11 @@ int main() {
     }
 }
        
-		//add employee
+		//EMPLOYEE MANAGEMENT
 		else if (option == 2) {
-            int employeeOptions;
+                        int employeeOptions;
             while (true) {
-                cout << "\n----- Administrator Menu -----" << endl;
+                cout << "\n----- Employee Management Menu -----" << endl; //EMPLOYEE MANAGEMENT WINDOW
                 cout << "1 - View Employee Roster" << endl;
                 cout << "2 - Edit Employee Roster" << endl;
                 cout << "3 - Add New Employee" << endl;
@@ -201,32 +207,34 @@ int main() {
                 cin >> employeeOptions;
                 cin.ignore();
 
+				//VIEW EMPLOYEE ROSTER
                 if (employeeOptions == 1) {
                     if (employeeCount == 0) {
                         cout << "No roster is currently set." << endl;
                     }
-                    else {
+                    else {//shows list of employee names and their store locations
                         cout << left << setw(5) << "No."
                              << setw(25) << "Employee Name"
                              << setw(20) << "Store Location" << endl;
-                        for (int i = 0; i < employeeCount; i++) {
+                        for (int i = 0; i < employeeCount; i++) { //loop for searching storage for employee names and locations
                             cout << left << setw(5) << i + 1
                                  << setw(25) << employeeNames[i]
                                  << setw(20) << employeeStores[i] << endl;
                         }
                     }
                 }
-       
+
+				//EDIT EMPLOYEE ROSTER
                 else if (employeeOptions == 2) {
                     if (employeeCount == 0) {
                         cout << "No employees to edit." << endl;
                     } else {
                         int employeeNumber;
-                        cout << "Enter employee number to edit: ";
+                        cout << "Enter employee number to edit: "; //employee number based on ROSTER POSITION (no.)
                         cin >> employeeNumber;
                         cin.ignore();
 
-                        if (employeeNumber < 1 || employeeNumber > employeeCount) {
+                        if (employeeNumber < 1 || employeeNumber > employeeCount) { //verification for existing employee number
                             cout << "Invalid employee number." << endl;
                         } else {
                             int idx = employeeNumber - 1;
@@ -234,18 +242,19 @@ int main() {
                             cout << "Enter new name (leave blank to keep): ";
                             string newName;
                             getline(cin, newName);
-                            if (!newName.empty()) employeeNames[idx] = newName;
+                            if (!newName.empty()) employeeNames[idx] = newName; //second chance feature to forgo editing employee name
 
                             cout << "Current store: " << employeeStores[idx] << endl;
                             cout << "Enter new store location (leave blank to keep): ";
                             string newStore;
                             getline(cin, newStore);
-                            if (!newStore.empty()) employeeStores[idx] = newStore;
+                            if (!newStore.empty()) employeeStores[idx] = newStore; //second chance feature to forgo editing employee location
 
                             cout << "Employee updated successfully." << endl;
                         }
                     }
                 }
+				//ADD NEW EMPLOYEE
                 else if (employeeOptions == 3) {
                     cout << "Enter employee name: ";
                     getline(cin, employeeNames[employeeCount]);
@@ -254,20 +263,21 @@ int main() {
                     employeeCount++;
                     cout << "Employee added successfully." << endl;
                 }
+				//DELETE EMPLOYEE
                 else if (employeeOptions == 4) {
                     if (employeeCount == 0) {
-                        cout << "No employees to delete." << endl;
+                        cout << "No employees to delete." << endl; //notification for no employees to delete
                     } else {
                         int employeeNumber;
-                        cout << "Enter employee number to delete: ";
+                        cout << "Enter employee number to delete: "; //employee number based on ROSTER POSITION (No.)
                         cin >> employeeNumber;
                         cin.ignore();
 
-                        if (employeeNumber < 1 || employeeNumber > employeeCount) {
+                        if (employeeNumber < 1 || employeeNumber > employeeCount) { //verification for existing employee number
                             cout << "Invalid employee number." << endl;
                         } else {
                             int idx = employeeNumber - 1;
-                            for (int i = idx; i < employeeCount - 1; i++) {
+                            for (int i = idx; i < employeeCount - 1; i++) { //loop for searching data storage for requested deletion
                                 employeeNames[i] = employeeNames[i + 1];
                                 employeeStores[i] = employeeStores[i + 1];
                             }
