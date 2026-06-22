@@ -30,7 +30,8 @@ int main() {
 		cout << "\n----- Aotearoa Treasures Management System -----" << endl;
 		cout << "1 - Product Management" << endl;
 		cout << "2 - Employee Management" << endl;
-		cout << "3 - Exit" << endl;
+        Cout << "3 - Customer Purchase Sytem" << endl; 
+		cout << "4 - Exit" << endl;
         cout << "Enter option" << endl;
 		cin >> option;
 		cin.ignore();
@@ -294,9 +295,126 @@ int main() {
                 }
             }
         }
+         //CUSTOMER PURCHASE SYSTEM
+         else if (option == 3) {
+            int storeChoice;
+            int productNumber;
+            int quantity;
+            string selectedStore;
 
+        if (productCount == 0) {
+        cout << "No products available for purchase." << endl;
+    }
+    else {
+          cout << "\n----- Customer Purchase System -----" << endl;
+          cout << "Choose store:" << endl;
+          cout << "1 - Wellington" << endl;
+          cout << "2 - Christchurch" << endl;
+          cout << "3 - Auckland" << endl;
+          cout << "Enter store option: ";
+          cin >> storeChoice;
+
+        if (storeChoice == 1) {
+            selectedStore = "Wellington";
+        }
+        else if (storeChoice == 2) {
+            selectedStore = "Christchurch";
+        }
+        else if (storeChoice == 3) {
+            selectedStore = "Auckland";
+        }
+        else {
+            cout << "Invalid store option." << endl;
+            continue;
+        }
+
+        cout << "\nAvailable products in " << selectedStore << ":" << endl;
+
+        cout << left << setw(5) << "No."
+             << setw(20) << "Product"
+             << setw(10) << "Price"
+             << setw(10) << "Stock" << endl;
+
+        for (int i = 0; i < productCount; i++) {
+            int currentStock = 0;
+
+            if (storeChoice == 1) {
+                currentStock = wellingtonStock[i];
+            }
+            else if (storeChoice == 2) {
+                currentStock = christchurchStock[i];
+            }
+            else if (storeChoice == 3) {
+                currentStock = aucklandStock[i];
+            }
+
+            if (currentStock > 0) {
+                cout << left << setw(5) << i + 1
+                     << setw(20) << productNames[i]
+                     << "$" << setw(9) << productPrices[i]
+                     << setw(10) << currentStock << endl;
+            }
+        }
+
+        cout << "\nEnter product number to purchase: ";
+        cin >> productNumber;
+
+        if (productNumber < 1 || productNumber > productCount) {
+            cout << "Invalid product number." << endl;
+            continue;
+        }
+
+        int index = productNumber - 1;
+
+        cout << "Enter quantity to purchase: ";
+        cin >> quantity;
+
+        if (quantity <= 0) {
+            cout << "Invalid quantity." << endl;
+            continue;
+        }
+
+        int availableStock = 0;
+
+        if (storeChoice == 1) {
+            availableStock = wellingtonStock[index];
+        }
+        else if (storeChoice == 2) {
+            availableStock = christchurchStock[index];
+        }
+        else if (storeChoice == 3) {
+            availableStock = aucklandStock[index];
+        }
+
+        if (quantity > availableStock) {
+            cout << "Not enough stock available." << endl;
+        }
+        else {
+            if (storeChoice == 1) {
+                wellingtonStock[index] -= quantity;
+            }
+            else if (storeChoice == 2) {
+                christchurchStock[index] -= quantity;
+            }
+            else if (storeChoice == 3) {
+                aucklandStock[index] -= quantity;
+            }
+
+            double totalCost = quantity * productPrices[index];
+
+            cout << "\nPurchase successful." << endl;
+            cout << "Store: " << selectedStore << endl;
+            cout << "Product: " << productNames[index] << endl;
+            cout << "Quantity: " << quantity << endl;
+            cout << "Total cost: $" << fixed << setprecision(2) << totalCost << endl;
+        }
+    }
+}
         //exit
         else if (option == 3) {
+            //customer purchase system code here 
+        }
+        else if (option == 4) {
             break;
         }
         else {
@@ -305,3 +423,4 @@ int main() {
     }
     system("pause>0");
 }
+
