@@ -7,17 +7,16 @@ using namespace std;
 int main() {
 
     //INVENTORY MANAGEMENT data storage
-	string productNames[100];
-	double productPrices[100];
+    string productNames[100];
+    double productPrices[100];
     int wellingtonStock[100];
     int christchurchStock[100];
     int aucklandStock[100];
 
     //EMPLOYEE MANAGEMENT
     string employeeNames[100];    //employee names
-        //EXIT
-    string employeeStores[100];     //store locations
-    
+    string employeeStores[100];   //store locations
+    string employeeDays[100];     //working days (e.g., Mon,Tue,...)
 
     //starting count for Inventory and Employee
     int productCount = 0;
@@ -26,199 +25,199 @@ int main() {
     //menu selection storage
     int option;
 
-	//MAIN MENU
-	while (true) {
-		cout << "\n----- Aotearoa Treasures Management System -----" << endl;
-		cout << "1 - Product Management" << endl;
-		cout << "2 - Employee Management" << endl;
-        cout << "3 - Customer Purchase Sytem" << endl; 
-		cout << "4 - Exit" << endl;
+    //MAIN MENU
+    while (true) {
+        cout << "\n----- Aotearoa Treasures Management System -----" << endl;
+        cout << "1 - Product Management" << endl;
+        cout << "2 - Employee Management" << endl;
+        cout << "3 - Customer Purchase Sytem" << endl;
+        cout << "4 - Exit" << endl;
         cout << "Enter option" << endl;
-		cin >> option;
-		cin.ignore();
-
-
-		//PRODUCT MANAGEMENT
-		if (option == 1) {
-
-			string password; //PASSWORD FOR ACCESSING PRODUCT MANAGEMENT MENU
-
-			cout << "admin password: ";
-			getline(cin, password);
-			
-			if (password !="1234") {
-				cout << "incorrect password" << endl;
-				continue;
-			}
-
-			int productOption;
-            while (true) {
-        cout << "\n----- Product Management Menu -----" << endl;
-        cout << "1 - View Products" << endl;
-        cout << "2 - Add Product" << endl;
-        cout << "3 - Update Product" << endl;
-        cout << "4 - Delete Product" << endl;
-        cout << "5 - Low Stock Alert" << endl;
-        cout << "6 - Back to Main Menu" << endl;
-        cout << "Enter option: ";
-        cin >> productOption;
+        cin >> option;
         cin.ignore();
 
-		//VIEW PRODUCTS
-        if (productOption == 1) {
-            if (productCount == 0) {
-                cout << "No products available." << endl;//when no products in stock => no products available
-            }
-            else {                                       //display table for all products
-                cout << left << setw(5) << "No."
-                     << setw(20) << "Product"
-                     << setw(10) << "Price"
-                     << setw(15) << "Wellington"
-                     << setw(18) << "Christchurch"
-                     << setw(15) << "Auckland" << endl;
 
-                for (int i = 0; i < productCount; i++) {   //loop for picking out products
-                    cout << left << setw(5) << i + 1
-                         << setw(20) << productNames[i]
-                         << "$" << setw(9) << productPrices[i]
-                         << setw(15) << wellingtonStock[i]
-                         << setw(18) << christchurchStock[i]
-                         << setw(15) << aucklandStock[i] << endl;
+        //PRODUCT MANAGEMENT
+        if (option == 1) {
+
+            string password; //PASSWORD FOR ACCESSING PRODUCT MANAGEMENT MENU
+
+            cout << "admin password: ";
+            getline(cin, password);
+
+            if (password != "1234") {
+                cout << "incorrect password" << endl;
+                continue;
+            }
+
+            int productOption;
+            while (true) {
+                cout << "\n----- Product Management Menu -----" << endl;
+                cout << "1 - View Products" << endl;
+                cout << "2 - Add Product" << endl;
+                cout << "3 - Update Product" << endl;
+                cout << "4 - Delete Product" << endl;
+                cout << "5 - Low Stock Alert" << endl;
+                cout << "6 - Back to Main Menu" << endl;
+                cout << "Enter option: ";
+                cin >> productOption;
+                cin.ignore();
+
+                //VIEW PRODUCTS
+                if (productOption == 1) {
+                    if (productCount == 0) {
+                        cout << "No products available." << endl;//when no products in stock => no products available
+                    }
+                    else {                                       //display table for all products
+                        cout << left << setw(5) << "No."
+                            << setw(20) << "Product"
+                            << setw(10) << "Price"
+                            << setw(15) << "Wellington"
+                            << setw(18) << "Christchurch"
+                            << setw(15) << "Auckland" << endl;
+
+                        for (int i = 0; i < productCount; i++) {   //loop for picking out products
+                            cout << left << setw(5) << i + 1
+                                << setw(20) << productNames[i]
+                                << "$" << setw(9) << productPrices[i]
+                                << setw(15) << wellingtonStock[i]
+                                << setw(18) << christchurchStock[i]
+                                << setw(15) << aucklandStock[i] << endl;
+                        }
+                    }
+                }
+
+                //ADD PRODUCT
+                else if (productOption == 2) {
+                    cout << "Enter product name: ";
+                    getline(cin, productNames[productCount]); //takes written line and stores in productNames[productCount]
+
+                    cout << "Enter product price: $";
+                    cin >> productPrices[productCount];
+
+                    cout << "Enter Wellington stock: ";
+                    cin >> wellingtonStock[productCount];
+
+                    cout << "Enter Christchurch stock: ";
+                    cin >> christchurchStock[productCount];
+
+                    cout << "Enter Auckland stock: ";
+                    cin >> aucklandStock[productCount];
+
+                    productCount++; //increase product count
+
+                    cout << "Product added successfully." << endl;
+                }
+
+                //UPDATE PRODUCT
+                else if (productOption == 3) {
+                    int productNumber;
+
+                    cout << "Enter product number to update: ";
+                    cin >> productNumber;
+                    cin.ignore();
+
+                    if (productNumber < 1 || productNumber > productCount) {//invalid number check and notification
+                        cout << "Invalid product number." << endl;
+                    }
+                    else {
+                        int index = productNumber - 1; //array index for product data to give productNumber
+
+                        cout << "Enter new product name: ";
+                        getline(cin, productNames[index]);
+
+                        cout << "Enter new product price: $";
+                        cin >> productPrices[index];
+
+                        cout << "Enter new Wellington stock: ";
+                        cin >> wellingtonStock[index];
+
+                        cout << "Enter new Christchurch stock: ";
+                        cin >> christchurchStock[index];
+
+                        cout << "Enter new Auckland stock: ";
+                        cin >> aucklandStock[index];
+
+                        cout << "Product updated successfully." << endl;
+                    }
+                }
+
+                //DELETE PRODUCT
+                else if (productOption == 4) {
+                    int productNumber;
+
+                    cout << "Enter product number to delete: ";
+                    cin >> productNumber;
+
+                    if (productNumber < 1 || productNumber > productCount) {
+                        cout << "Invalid product number." << endl;
+                    }
+                    else {
+                        int index = productNumber - 1;  //array index for product data to give productNumber
+
+                        for (int i = index; i < productCount - 1; i++) {  //removes product from ALL stores
+                            productNames[i] = productNames[i + 1];
+                            productPrices[i] = productPrices[i + 1];
+                            wellingtonStock[i] = wellingtonStock[i + 1];
+                            christchurchStock[i] = christchurchStock[i + 1];
+                            aucklandStock[i] = aucklandStock[i + 1];
+                        }
+
+                        productCount--; //reduce product count
+
+                        cout << "Product deleted successfully." << endl;
+                    }
+                }
+                //LOW STOCK ALERT FEATURE
+                else if (productOption == 5) {
+                    bool lowStockFound = false; // false = no low stock found, true = at least one low stock product found
+
+                    for (int i = 0; i < productCount; i++) { //loop for checking products
+                        if (wellingtonStock[i] < 5 || christchurchStock[i] < 5 || aucklandStock[i] < 5) {
+                            lowStockFound = true;
+
+                            cout << "\nLow stock product: " << productNames[i] << endl;
+
+                            if (wellingtonStock[i] < 5) {
+                                cout << "Wellington stock: " << wellingtonStock[i] << endl;
+                            }
+
+                            if (christchurchStock[i] < 5) {
+                                cout << "Christchurch stock: " << christchurchStock[i] << endl;
+                            }
+
+                            if (aucklandStock[i] < 5) {
+                                cout << "Auckland stock: " << aucklandStock[i] << endl;
+                            }
+                        }
+                    }
+
+                    if (!lowStockFound) { //no low stock notification
+                        cout << "No low stock products found." << endl;
+                    }
+                }
+                else if (productOption == 6) {
+                    break;
+                }
+                else {
+                    cout << "Invalid choice." << endl;
                 }
             }
         }
 
-		//ADD PRODUCT
-        else if (productOption == 2) {
-            cout << "Enter product name: ";
-            getline(cin, productNames[productCount]); //takes written line and stores in productNames[productCount]
+        //EMPLOYEE MANAGEMENT
+        else if (option == 2) {
+            string password; //PASSWORD FOR ACCESSING EMPLOYEE MANAGEMENT MENU
 
-            cout << "Enter product price: $";
-            cin >> productPrices[productCount];
+            cout << "admin password: ";
+            getline(cin, password);
 
-            cout << "Enter Wellington stock: ";
-            cin >> wellingtonStock[productCount];
-
-            cout << "Enter Christchurch stock: ";
-            cin >> christchurchStock[productCount];
-
-            cout << "Enter Auckland stock: ";
-            cin >> aucklandStock[productCount];
-
-            productCount++; //increase product count
-
-            cout << "Product added successfully." << endl;
-        }
-
-		//UPDATE PRODUCT
-        else if (productOption == 3) {
-            int productNumber;
-
-            cout << "Enter product number to update: ";
-            cin >> productNumber;
-            cin.ignore();
-
-            if (productNumber < 1 || productNumber > productCount) {//invalid number check and notification
-                cout << "Invalid product number." << endl;
-            }
-            else {
-                int index = productNumber - 1; //array index for product data to give productNumber
-
-                cout << "Enter new product name: ";
-                getline(cin, productNames[index]);
-
-                cout << "Enter new product price: $";
-                cin >> productPrices[index];
-
-                cout << "Enter new Wellington stock: ";
-                cin >> wellingtonStock[index];
-
-                cout << "Enter new Christchurch stock: ";
-                cin >> christchurchStock[index];
-
-                cout << "Enter new Auckland stock: ";
-                cin >> aucklandStock[index];
-
-                cout << "Product updated successfully." << endl;
-            }
-        }
-
-		//DELETE PRODUCT
-        else if (productOption == 4) {
-            int productNumber;
-
-            cout << "Enter product number to delete: ";
-            cin >> productNumber;
-
-            if (productNumber < 1 || productNumber > productCount) {
-                cout << "Invalid product number." << endl;
-            }
-            else {
-                int index = productNumber - 1;  //array index for product data to give productNumber
-
-                for (int i = index; i < productCount - 1; i++) {  //removes product from ALL stores
-                    productNames[i] = productNames[i + 1];
-                    productPrices[i] = productPrices[i + 1];
-                    wellingtonStock[i] = wellingtonStock[i + 1];
-                    christchurchStock[i] = christchurchStock[i + 1];
-                    aucklandStock[i] = aucklandStock[i + 1];
-                }
-
-                productCount--; //reduce product count
-
-                cout << "Product deleted successfully." << endl;
-            }
-        }
-		//LOW STOCK ALERT FEATURE
-        else if (productOption == 5) {
-            bool lowStockFound = false; // false = no low stock found, true = at least one low stock product found
-
-            for (int i = 0; i < productCount; i++) { //loop for checking products
-                if (wellingtonStock[i] < 5 || christchurchStock[i] < 5 || aucklandStock[i] < 5) {
-                    lowStockFound = true;
-
-                    cout << "\nLow stock product: " << productNames[i] << endl;
-
-                    if (wellingtonStock[i] < 5) {
-                        cout << "Wellington stock: " << wellingtonStock[i] << endl;
-                    }
-
-                    if (christchurchStock[i] < 5) {
-                        cout << "Christchurch stock: " << christchurchStock[i] << endl;
-                    }
-
-                    if (aucklandStock[i] < 5) {
-                        cout << "Auckland stock: " << aucklandStock[i] << endl;
-                    }
-                }
+            if (password != "1234") {
+                cout << "incorrect password" << endl;
+                continue;
             }
 
-            if (!lowStockFound) { //no low stock notification
-                cout << "No low stock products found." << endl;
-            }
-        }
-        else if (productOption == 6) {
-            break;
-        }
-        else {
-            cout << "Invalid choice." << endl;
-        }
-    }
-}
-       
-		//EMPLOYEE MANAGEMENT
-		else if (option == 2) {
-						string password; //PASSWORD FOR ACCESSING EMPLOYEE MANAGEMENT MENU
-
-			cout << "admin password: ";
-			getline(cin, password);
-			
-			if (password !="1234") {
-				cout << "incorrect password" << endl;
-				continue;
-			}
-			
-                        int employeeOptions;
+            int employeeOptions;
             while (true) {
                 cout << "\n----- Employee Management Menu -----" << endl; //EMPLOYEE MANAGEMENT WINDOW
                 cout << "1 - View Employee Roster" << endl;
@@ -230,28 +229,31 @@ int main() {
                 cin >> employeeOptions;
                 cin.ignore();
 
-				//VIEW EMPLOYEE ROSTER
+                //VIEW EMPLOYEE ROSTER
                 if (employeeOptions == 1) {
                     if (employeeCount == 0) {
                         cout << "No roster is currently set." << endl;
                     }
-                    else {//shows list of employee names and their store locations
+                    else {//shows list of employee names and their store locations and days
                         cout << left << setw(5) << "No."
-                             << setw(25) << "Employee Name"
-                             << setw(20) << "Store Location" << endl;
+                            << setw(25) << "Employee Name"
+                            << setw(20) << "Store Location"
+                            << setw(25) << "Working Days" << endl;
                         for (int i = 0; i < employeeCount; i++) { //loop for searching storage for employee names and locations
                             cout << left << setw(5) << i + 1
-                                 << setw(25) << employeeNames[i]
-                                 << setw(20) << employeeStores[i] << endl;
+                                << setw(25) << employeeNames[i]
+                                << setw(20) << employeeStores[i]
+                                << setw(25) << employeeDays[i] << endl;
                         }
                     }
                 }
 
-				//EDIT EMPLOYEE ROSTER
+                //EDIT EMPLOYEE ROSTER
                 else if (employeeOptions == 2) {
                     if (employeeCount == 0) {
                         cout << "No employees to edit." << endl;
-                    } else {
+                    }
+                    else {
                         int employeeNumber;
                         cout << "Enter employee number to edit: "; //employee number based on ROSTER POSITION (no.)
                         cin >> employeeNumber;
@@ -259,7 +261,8 @@ int main() {
 
                         if (employeeNumber < 1 || employeeNumber > employeeCount) { //verification for existing employee number
                             cout << "Invalid employee number." << endl;
-                        } else {
+                        }
+                        else {
                             int idx = employeeNumber - 1;
                             cout << "Current name: " << employeeNames[idx] << endl;
                             cout << "Enter new name (leave blank to keep): ";
@@ -273,24 +276,33 @@ int main() {
                             getline(cin, newStore);
                             if (!newStore.empty()) employeeStores[idx] = newStore; //second chance feature to forgo editing employee location
 
+                            cout << "Current working days: " << employeeDays[idx] << endl;
+                            cout << "Enter new working days (e.g., Mon,Tue,Wed) (leave blank to keep): ";
+                            string newDays;
+                            getline(cin, newDays);
+                            if (!newDays.empty()) employeeDays[idx] = newDays;
+
                             cout << "Employee updated successfully." << endl;
                         }
                     }
                 }
-				//ADD NEW EMPLOYEE
+                //ADD NEW EMPLOYEE
                 else if (employeeOptions == 3) {
                     cout << "Enter employee name: ";
                     getline(cin, employeeNames[employeeCount]);
                     cout << "Enter store location: ";
                     getline(cin, employeeStores[employeeCount]);
+                    cout << "Enter working days (e.g., Mon,Tue,Wed): ";
+                    getline(cin, employeeDays[employeeCount]);
                     employeeCount++;
                     cout << "Employee added successfully." << endl;
                 }
-				//DELETE EMPLOYEE
+                //DELETE EMPLOYEE
                 else if (employeeOptions == 4) {
                     if (employeeCount == 0) {
                         cout << "No employees to delete." << endl; //notification for no employees to delete
-                    } else {
+                    }
+                    else {
                         int employeeNumber;
                         cout << "Enter employee number to delete: "; //employee number based on ROSTER POSITION (No.)
                         cin >> employeeNumber;
@@ -298,11 +310,13 @@ int main() {
 
                         if (employeeNumber < 1 || employeeNumber > employeeCount) { //verification for existing employee number
                             cout << "Invalid employee number." << endl;
-                        } else {
+                        }
+                        else {
                             int idx = employeeNumber - 1;
                             for (int i = idx; i < employeeCount - 1; i++) { //loop for searching data storage for requested deletion
                                 employeeNames[i] = employeeNames[i + 1];
                                 employeeStores[i] = employeeStores[i + 1];
+                                employeeDays[i] = employeeDays[i + 1];
                             }
                             employeeCount--;
                             cout << "Employee deleted successfully." << endl;
@@ -317,121 +331,121 @@ int main() {
                 }
             }
         }
-         //CUSTOMER PURCHASE SYSTEM
-         else if (option == 3) {
+        //CUSTOMER PURCHASE SYSTEM
+        else if (option == 3) {
             int storeChoice;
             int productNumber;
             int quantity;
             string selectedStore;
 
-        if (productCount == 0) {
-        cout << "No products available for purchase." << endl;
-    }
-    else {
-          cout << "\n----- Customer Purchase System -----" << endl; //displays store locations to purchase from
-          cout << "Choose store:" << endl;
-          cout << "1 - Wellington" << endl;
-          cout << "2 - Christchurch" << endl;
-          cout << "3 - Auckland" << endl;
-          cout << "Enter store option: ";
-          cin >> storeChoice;
-
-        if (storeChoice == 1) {   //chosen number sets to location
-            selectedStore = "Wellington";
-        }
-        else if (storeChoice == 2) {
-            selectedStore = "Christchurch";
-        }
-        else if (storeChoice == 3) {
-            selectedStore = "Auckland";
-        }
-        else {
-            cout << "Invalid store option." << endl;
-            continue;
-        }
-
-        cout << "\nAvailable products in " << selectedStore << ":" << endl;
-
-        cout << left << setw(5) << "No."
-             << setw(20) << "Product"
-             << setw(10) << "Price"
-             << setw(10) << "Stock" << endl;
-
-        for (int i = 0; i < productCount; i++) { //loop for searching location store stock and item info
-            int currentStock = 0;
-
-            if (storeChoice == 1) {
-                currentStock = wellingtonStock[i];
+            if (productCount == 0) {
+                cout << "No products available for purchase." << endl;
             }
-            else if (storeChoice == 2) {
-                currentStock = christchurchStock[i];
+            else {
+                cout << "\n----- Customer Purchase System -----" << endl; //displays store locations to purchase from
+                cout << "Choose store:" << endl;
+                cout << "1 - Wellington" << endl;
+                cout << "2 - Christchurch" << endl;
+                cout << "3 - Auckland" << endl;
+                cout << "Enter store option: ";
+                cin >> storeChoice;
+
+                if (storeChoice == 1) {   //chosen number sets to location
+                    selectedStore = "Wellington";
+                }
+                else if (storeChoice == 2) {
+                    selectedStore = "Christchurch";
+                }
+                else if (storeChoice == 3) {
+                    selectedStore = "Auckland";
+                }
+                else {
+                    cout << "Invalid store option." << endl;
+                    continue;
+                }
+
+                cout << "\nAvailable products in " << selectedStore << ":" << endl;
+
+                cout << left << setw(5) << "No."
+                    << setw(20) << "Product"
+                    << setw(10) << "Price"
+                    << setw(10) << "Stock" << endl;
+
+                for (int i = 0; i < productCount; i++) { //loop for searching location store stock and item info
+                    int currentStock = 0;
+
+                    if (storeChoice == 1) {
+                        currentStock = wellingtonStock[i];
+                    }
+                    else if (storeChoice == 2) {
+                        currentStock = christchurchStock[i];
+                    }
+                    else if (storeChoice == 3) {
+                        currentStock = aucklandStock[i];
+                    }
+
+                    if (currentStock > 0) {        //displays product info (stock names, count, price)
+                        cout << left << setw(5) << i + 1
+                            << setw(20) << productNames[i]
+                            << "$" << setw(9) << productPrices[i]
+                            << setw(10) << currentStock << endl;
+                    }
+                }
+
+                cout << "\nEnter product number to purchase: ";   //product number in relation to "Available products in" feature
+                cin >> productNumber;
+
+                if (productNumber < 1 || productNumber > productCount) {
+                    cout << "Invalid product number." << endl;
+                    continue;
+                }
+
+                int index = productNumber - 1; //setting array to start at 1
+
+                cout << "Enter quantity to purchase: ";
+                cin >> quantity;
+
+                if (quantity <= 0) {
+                    cout << "Invalid quantity." << endl;
+                    continue;
+                }
+
+                int availableStock = 0;
+
+                if (storeChoice == 1) {          //finds stock amount after choosing what product and quantity to purchase
+                    availableStock = wellingtonStock[index];
+                }
+                else if (storeChoice == 2) {
+                    availableStock = christchurchStock[index];
+                }
+                else if (storeChoice == 3) {
+                    availableStock = aucklandStock[index];
+                }
+
+                if (quantity > availableStock) {
+                    cout << "Not enough stock available." << endl;
+                }
+                else {
+                    if (storeChoice == 1) {   //reduces stock by quantity purchased by customer
+                        wellingtonStock[index] -= quantity;
+                    }
+                    else if (storeChoice == 2) {
+                        christchurchStock[index] -= quantity;
+                    }
+                    else if (storeChoice == 3) {
+                        aucklandStock[index] -= quantity;
+                    }
+
+                    double totalCost = quantity * productPrices[index]; //total cost calculator
+
+                    cout << "\nPurchase successful." << endl;    //displays purchase made by customer (reciept)
+                    cout << "Store: " << selectedStore << endl;
+                    cout << "Product: " << productNames[index] << endl;
+                    cout << "Quantity: " << quantity << endl;
+                    cout << "Total cost: $" << fixed << setprecision(2) << totalCost << endl; //set precision sets to 2 decimal points
+                }
             }
-            else if (storeChoice == 3) {
-                currentStock = aucklandStock[i];
-            }
-
-            if (currentStock > 0) {        //displays product info (stock names, count, price)
-                cout << left << setw(5) << i + 1
-                     << setw(20) << productNames[i]
-                     << "$" << setw(9) << productPrices[i]
-                     << setw(10) << currentStock << endl;
-            }
         }
-
-        cout << "\nEnter product number to purchase: ";   //product number in relation to "Available products in" feature
-        cin >> productNumber;
-
-        if (productNumber < 1 || productNumber > productCount) {
-            cout << "Invalid product number." << endl;
-            continue;
-        }
-
-        int index = productNumber - 1; //setting array to start at 1
-
-        cout << "Enter quantity to purchase: ";
-        cin >> quantity;
-
-        if (quantity <= 0) {
-            cout << "Invalid quantity." << endl;
-            continue;
-        }
-
-        int availableStock = 0;
-
-        if (storeChoice == 1) {          //finds stock amount after choosing what product and quantity to purchase
-            availableStock = wellingtonStock[index];
-        }
-        else if (storeChoice == 2) {
-            availableStock = christchurchStock[index];
-        }
-        else if (storeChoice == 3) {
-            availableStock = aucklandStock[index];
-        }
-
-        if (quantity > availableStock) {
-            cout << "Not enough stock available." << endl;
-        }
-        else {
-            if (storeChoice == 1) {   //reduces stock by quantity purchased by customer
-                wellingtonStock[index] -= quantity;
-            }
-            else if (storeChoice == 2) {
-                christchurchStock[index] -= quantity;
-            }
-            else if (storeChoice == 3) {
-                aucklandStock[index] -= quantity;
-            }
-
-            double totalCost = quantity * productPrices[index]; //total cost calculator
-
-            cout << "\nPurchase successful." << endl;    //displays purchase made by customer (reciept)
-            cout << "Store: " << selectedStore << endl;
-            cout << "Product: " << productNames[index] << endl;
-            cout << "Quantity: " << quantity << endl;
-            cout << "Total cost: $" << fixed << setprecision(2) << totalCost << endl; //set precision sets to 2 decimal points
-        }
-    }
-}
         //EXIT
         else if (option == 4) {
             break;
